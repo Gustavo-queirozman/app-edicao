@@ -1,0 +1,124 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/lib/generations.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/lib</a> generations.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/30</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/9</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/6</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/5</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as Crypto from 'expo-crypto';
+import { Directory, File, Paths } from 'expo-file-system';
+import { request } from './http';
+import { PreparedImage } from './photo';
+import { Session, freshToken } from './session';
+&nbsp;
+export type GenerationStatus = 'queued' | 'processing' | 'completed' | 'failed' | 'expired' | 'cancelled';
+export type Generation = { id: string; status: GenerationStatus; errorCode?: 'openai_failed' | 'content_blocked' | 'insufficient_credits' | 'rate_limited'; resultChecksum?: string };
+const auth = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (session: Session) =&gt; (<span class="cstat-no" title="statement not covered" >{ Authorization: `Bearer ${(await freshToken(session)).accessToken}` })</span>;</span>
+export async function <span class="fstat-no" title="function not covered" >createGeneration(</span>session: Session, effectId: string, image: PreparedImage, idempotencyKey = <span class="branch-0 cbranch-no" title="branch not covered" >Crypto.randomUUID())</span> { const form = <span class="cstat-no" title="statement not covered" >new FormData();</span> <span class="cstat-no" title="statement not covered" >form.append('effectId', effectId); <span class="cstat-no" title="statement not covered" ></span>form.append('image', { uri: image.uri, type: image.mimeType, name: image.name } as unknown as Blob); <span class="cstat-no" title="statement not covered" ></span>return request&lt;Generation&gt;('/generations', { method: 'POST', headers: { ...(await auth(session)), 'Idempotency-Key': idempotencyKey }, body: form }); </span>}
+export async function <span class="fstat-no" title="function not covered" >getGeneration(</span>session: Session, id: string) { <span class="cstat-no" title="statement not covered" >return request&lt;Generation&gt;(`/generations/${id}`, { headers: await auth(session) }); </span>}
+export async function <span class="fstat-no" title="function not covered" >pollGeneration(</span>session: Session, id: string, onChange: (generation: Generation) =&gt; void, signal?: AbortSignal) { <span class="cstat-no" title="statement not covered" >for (let wait = <span class="cstat-no" title="statement not covered" >1000;</span> !signal?.aborted; wait = Math.min(wait * 1.6, 10000)) { const generation = <span class="cstat-no" title="statement not covered" >await getGeneration(session, id);</span> <span class="cstat-no" title="statement not covered" >onChange(generation); <span class="cstat-no" title="statement not covered" ></span>if (['completed', 'failed', 'expired', 'cancelled'].includes(generation.status)) <span class="cstat-no" title="statement not covered" >return generation; <span class="cstat-no" title="statement not covered" ></span></span>await new Promise(<span class="fstat-no" title="function not covered" >re</span>solve =&gt; <span class="cstat-no" title="statement not covered" >setTimeout(resolve, wait))</span>; </span>} <span class="cstat-no" title="statement not covered" ></span>throw new Error('Acompanhamento cancelado.'); </span>}
+export async function <span class="fstat-no" title="function not covered" >downloadAndAcknowledge(</span>session: Session, generation: Generation) { const directory = <span class="cstat-no" title="statement not covered" >new Directory(Paths.document, 'creations');</span> <span class="cstat-no" title="statement not covered" >directory.create({ idempotent: true, intermediates: true }); </span>const temporary = <span class="cstat-no" title="statement not covered" >new File(directory, `${generation.id}.tmp`);</span> const result = <span class="cstat-no" title="statement not covered" >await File.downloadFileAsync(`${(await import('./config')).config.apiUrl}/generations/${generation.id}/result`, temporary, { headers: await auth(session), idempotent: true });</span> const hash = <span class="cstat-no" title="statement not covered" >await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, await result.base64());</span> <span class="cstat-no" title="statement not covered" >if (generation.resultChecksum &amp;&amp; hash !== generation.resultChecksum) { <span class="cstat-no" title="statement not covered" >result.delete(); <span class="cstat-no" title="statement not covered" ></span>throw new Error('O arquivo baixado não passou na verificação.'); </span>} </span>const saved = <span class="cstat-no" title="statement not covered" >new File(directory, `${generation.id}.jpg`);</span> <span class="cstat-no" title="statement not covered" >if (saved.exists) <span class="cstat-no" title="statement not covered" >saved.delete(); <span class="cstat-no" title="statement not covered" ></span></span>await result.move(saved); <span class="cstat-no" title="statement not covered" ></span>await request(`/generations/${generation.id}/ack`, { method: 'POST', headers: { ...(await auth(session)), 'Content-Type': 'application/json' }, body: JSON.stringify({ checksum: hash }) }); <span class="cstat-no" title="statement not covered" ></span>return saved.uri; </span>}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-10-16T17:05:52.601Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    

@@ -1,0 +1,109 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/lib/photo.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/lib</a> photo.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/22</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/35</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/3</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/3</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as ImagePicker from 'expo-image-picker';
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
+import { File } from 'expo-file-system';
+&nbsp;
+const allowed = <span class="cstat-no" title="statement not covered" >new Set(['image/jpeg', 'image/png', 'image/webp']);</span>
+export type PreparedImage = { uri: string; mimeType: 'image/jpeg' | 'image/png' | 'image/webp'; name: string };
+function <span class="fstat-no" title="function not covered" >mimeFromMagic(</span>bytes: Uint8Array) { const b = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(i</span>ndex: number) =&gt; <span class="cstat-no" title="statement not covered" >bytes[index];</span></span> <span class="cstat-no" title="statement not covered" >if (b(0) === 0xff &amp;&amp; b(1) === 0xd8) <span class="cstat-no" title="statement not covered" >return 'image/jpeg'; <span class="cstat-no" title="statement not covered" ></span></span>if (b(0) === 0x89 &amp;&amp; b(1) === 0x50 &amp;&amp; b(2) === 0x4e &amp;&amp; b(3) === 0x47) <span class="cstat-no" title="statement not covered" >return 'image/png'; <span class="cstat-no" title="statement not covered" ></span></span>if (String.fromCharCode(...bytes.slice(0, 4)) === 'RIFF' &amp;&amp; String.fromCharCode(...bytes.slice(8, 12)) === 'WEBP') <span class="cstat-no" title="statement not covered" >return 'image/webp'; <span class="cstat-no" title="statement not covered" ></span></span>return undefined; </span>}
+export async function <span class="fstat-no" title="function not covered" >choosePhoto(</span>fromCamera = <span class="branch-0 cbranch-no" title="branch not covered" >false)</span>: Promise&lt;PreparedImage | null&gt; { const permission = <span class="cstat-no" title="statement not covered" >fromCamera ? await ImagePicker.requestCameraPermissionsAsync() : await ImagePicker.requestMediaLibraryPermissionsAsync();</span> <span class="cstat-no" title="statement not covered" >if (!permission.granted) <span class="cstat-no" title="statement not covered" >throw new Error('Permissão necessária para escolher uma foto.'); </span></span>const picked = <span class="cstat-no" title="statement not covered" >fromCamera ? await ImagePicker.launchCameraAsync({ mediaTypes: ['images'], quality: 1 }) : await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], quality: 1 });</span> <span class="cstat-no" title="statement not covered" >if (picked.canceled) <span class="cstat-no" title="statement not covered" >return null; </span></span>const asset = <span class="cstat-no" title="statement not covered" >picked.assets[0];</span> const mimeType = <span class="cstat-no" title="statement not covered" >mimeFromMagic((await new File(asset.uri).bytes()).slice(0, 16));</span> <span class="cstat-no" title="statement not covered" >if (!mimeType || !allowed.has(mimeType)) <span class="cstat-no" title="statement not covered" >throw new Error('Escolha uma imagem JPG, PNG ou WEBP válida.'); </span></span>const resized = <span class="cstat-no" title="statement not covered" >await manipulateAsync(asset.uri, [{ resize: asset.width &gt; 2048 ? { width: 2048 } : {} }], { compress: .9, format: mimeType === 'image/png' ? SaveFormat.PNG : SaveFormat.JPEG, base64: false });</span> <span class="cstat-no" title="statement not covered" >return { uri: resized.uri, mimeType: mimeType === 'image/png' ? 'image/png' : 'image/jpeg', name: `foto-${Date.now()}.${mimeType === 'image/png' ? 'png' : 'jpg'}` }; </span>}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-10-16T17:05:52.601Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    
