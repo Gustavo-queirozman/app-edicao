@@ -159,5 +159,5 @@ const categoryAssets: Record<string, number> = {
 export const commandCategories: Category[] = groups.map(({ id, name, description, icon, tint }) => ({ id, name, description, icon, tint, coverUrl: '', coverAsset: categoryAssets[id] }));
 export const commandEffects: Effect[] = groups.flatMap(group => group.effects.split('\n').map(line => {
   const [id, name, description] = line.split('|');
-  return { id, name, description, categoryId: group.id, tags: [id, name, description, `/${id}`], costCredits: 1, inputCount: 1, quality: ['standard'], exampleUrls: [] };
+  return { id, name, description, categoryId: group.id, tags: [id, name, description, `/${id}`], promptCommand: `/${id}`, costCredits: 1, inputCount: 1, quality: ['standard'], exampleUrls: [] };
 }));

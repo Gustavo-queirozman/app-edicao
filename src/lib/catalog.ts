@@ -3,7 +3,7 @@ import { request } from './http';
 import { commandCategories, commandEffects } from './commandCatalog';
 
 export type Category = { id: string; name: string; coverUrl: string; coverAsset?: number; icon?: string; tint?: string; description?: string };
-export type Effect = { id: string; name: string; description: string; categoryId: string; tags: string[]; costCredits: number; inputCount: number; quality: string[]; coverUrl?: string; exampleUrls: string[] };
+export type Effect = { id: string; name: string; description: string; categoryId: string; tags: string[]; promptCommand?: string; costCredits: number; inputCount: number; quality: string[]; coverUrl?: string; exampleUrls: string[] };
 type Cached<T> = { savedAt: number; value: T };
 
 // Dados de demonstração locais; a API substitui este catálogo quando estiver disponível.
